@@ -1,7 +1,6 @@
 #include "gst_player.h"
 
 #include "include/flutter_gstreamer_player/flutter_gstreamer_player_plugin.h"
-#include "include/flutter_gstreamer_player/flutter_gstreamer_player_video_outlet.h"
 
 #include <flutter/method_channel.h>
 #include <flutter/plugin_registrar.h>
