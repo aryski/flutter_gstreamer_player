@@ -19,13 +19,18 @@ pkg_check_modules(GST_VIDEO REQUIRED gstreamer-video-1.0)
 add_library(GST_PLAYER STATIC
   "../gst_player/gst_player.cc"
 )
-target_include_directories(GST_PLAYER PUBLIC
+target_include_directories(GST_PLAYER PRIVATE
   "../gst_player"
   ${GSTREAMER_INCLUDE_DIRS}
 )
 
 add_library(${PLUGIN_NAME} SHARED
   "flutter_gstreamer_player_plugin.cc"
+)
+target_include_directories(${PLUGIN_NAME} INTERFACE
+  "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_include_directories(${PLUGIN_NAME} PRIVATE
+  ${GSTREAMER_INCLUDE_DIRS}
 )
 
 apply_standard_settings(${PLUGIN_NAME})
