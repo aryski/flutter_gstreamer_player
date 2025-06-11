@@ -11,7 +11,6 @@ set(PLUGIN_NAME "flutter_gstreamer_player_plugin")
 
 # GStreamer libraries
 find_package(PkgConfig)
-pkg_search_module(GLIB REQUIRED glib-2.0)
 pkg_check_modules(GSTREAMER REQUIRED gstreamer-1.0)
 pkg_check_modules(GST_APP REQUIRED gstreamer-app-1.0)
 pkg_check_modules(GST_VIDEO REQUIRED gstreamer-video-1.0)
@@ -23,7 +22,6 @@ add_library(GST_PLAYER STATIC
 target_include_directories(GST_PLAYER PUBLIC
   "../gst_player"
   ${GSTREAMER_INCLUDE_DIRS}
-  ${GLIB2_INCLUDE_DIRS}
 )
 
 add_library(${PLUGIN_NAME} SHARED
@@ -33,7 +31,7 @@ add_library(${PLUGIN_NAME} SHARED
 apply_standard_settings(${PLUGIN_NAME})
 target_compile_definitions(${PLUGIN_NAME} PRIVATE FLUTTER_PLUGIN_IMPL)
 target_link_libraries(${PLUGIN_NAME} PRIVATE flutter)
-target_link_libraries(${PLUGIN_NAME} PRIVATE ${GST_APP_LIBRARIES} ${GST_VIDEO_LIBRARIES})
+target_link_libraries(${PLUGIN_NAME} PRIVATE ${GSTREAMER_LIBRARIES} ${GST_APP_LIBRARIES} ${GST_VIDEO_LIBRARIES})
 target_link_libraries(${PLUGIN_NAME} PRIVATE GST_PLAYER)
 
 # List of absolute paths to libraries that should be bundled with the plugin
