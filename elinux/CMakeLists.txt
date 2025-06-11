@@ -22,14 +22,12 @@ add_library(GST_PLAYER STATIC
 )
 target_include_directories(GST_PLAYER PUBLIC
   "../gst_player"
+  ${GSTREAMER_INCLUDE_DIRS}
+  ${GLIB2_INCLUDE_DIRS}
 )
 
 add_library(${PLUGIN_NAME} SHARED
   "flutter_gstreamer_player_plugin.cc"
-)
-target_include_directories(${PLUGIN_NAME} PRIVATE
-  ${GSTREAMER_INCLUDE_DIRS}
-  ${GLIB2_INCLUDE_DIRS}
 )
 
 apply_standard_settings(${PLUGIN_NAME})
