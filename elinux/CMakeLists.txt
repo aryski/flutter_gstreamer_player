@@ -11,39 +11,41 @@ set(PLUGIN_NAME "flutter_gstreamer_player_plugin")
 
 # GStreamer libraries
 find_package(PkgConfig REQUIRED)
+pkg_check_modules(GLIB REQUIRED glib-2.0)
 pkg_check_modules(GSTREAMER REQUIRED gstreamer-1.0)
 pkg_check_modules(GST_APP REQUIRED gstreamer-app-1.0)
 pkg_check_modules(GST_VIDEO REQUIRED gstreamer-video-1.0)
 
-# Plugin library
 add_library(${PLUGIN_NAME} SHARED
   "flutter_gstreamer_player_plugin.cc"
   "../gst_player/gst_player.cc"
 )
 apply_standard_settings(${PLUGIN_NAME})
+set_target_properties(${PLUGIN_NAME} PROPERTIES
+  CXX_VISIBILITY_PRESET hidden)
 target_compile_definitions(${PLUGIN_NAME} PRIVATE FLUTTER_PLUGIN_IMPL)
-
-target_include_directories(${PLUGIN_NAME} PRIVATE
-  "../gst_player" # For gst_player.h
-  ${GSTREAMER_INCLUDE_DIRS}
-  ${GST_APP_INCLUDE_DIRS}
-  ${GST_VIDEO_INCLUDE_DIRS}
-  $<TARGET_PROPERTY:flutter,INTERFACE_INCLUDE_DIRECTORIES>
-)
-
-target_link_libraries(${PLUGIN_NAME} PRIVATE
-  flutter
-  ${GSTREAMER_LIBRARIES}
-  ${GST_APP_LIBRARIES}
-  ${GST_VIDEO_LIBRARIES}
-)
-
-# Public headers for the plugin.
 target_include_directories(${PLUGIN_NAME} INTERFACE
-  "${CMAKE_CURRENT_SOURCE_DIR}/include"
+  "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_link_libraries(${PLUGIN_NAME} PRIVATE flutter flutter_wrapper_plugin)
+
+target_include_directories(${PLUGIN_NAME}
+  PRIVATE
+    ../gst_player
+    ${GLIB_INCLUDE_DIRS}
+    ${GSTREAMER_INCLUDE_DIRS}
+    ${GST_APP_INCLUDE_DIRS}
+    ${GST_VIDEO_INCLUDE_DIRS}
+)
+
+target_link_libraries(${PLUGIN_NAME}
+  PRIVATE
+    ${GLIB_LIBRARIES}
+    ${GSTREAMER_LIBRARIES}
+    ${GST_APP_LIBRARIES}
+    ${GST_VIDEO_LIBRARIES}
 )
 
 # List of absolute paths to libraries that should be bundled with the plugin
-set(FLUTTER_GSTREAMER_PLAYER_PLUGIN_BUNDLED_LIBRARIES
+set(flutter_gstreamer_player_plugin_bundled_libraries
   ""
 ) 
