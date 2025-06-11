@@ -8,6 +8,10 @@ A GStreamer-powered alternative to Flutter's video_player that support Linux, iO
 
 ## Installation
 
+### eLinux
+
+Follow GStreamer's [Install on Linux](https://gstreamer.freedesktop.org/documentation/installing/on-linux.html?gi-language=c) instuction.
+
 ### Linux
 
 Follow GStreamer's [Install on Linux](https://gstreamer.freedesktop.org/documentation/installing/on-linux.html?gi-language=c) instuction.
